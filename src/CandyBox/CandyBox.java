@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class CandyBox implements CandyBoxInterface {
 
-    private ArrayList<Sweets> candyBox;
+    private final ArrayList<Sweets> candyBox;
 
     public CandyBox() {
         candyBox = new ArrayList<>();
@@ -44,14 +44,46 @@ public class CandyBox implements CandyBoxInterface {
 
     @Override
     public String getAllSweetsInfo() {
-        StringBuilder info = new StringBuilder("");
+        StringBuilder info = new StringBuilder();
         info.append("Information about candies in Candy Box:\n");
         for (Sweets candy :
                 candyBox) {
             info.append(String.format("Candy № %d name: %s, weight: %f, price: %f", candyBox.indexOf(candy)+1, candy.getName(), candy.getWeight(), candy.getPrice()));
-            if(candy.getManufacturer()!=null) info.append(String.format(", manufacturer: \n"));
+            if(candy.getManufacturer()!=null) info.append(String.format(", manufacturer: %s\n", candy.getManufacturer()));
             else info.append("\n");
         }
         return info.toString();
+    }
+
+    @Override
+    public Sweets getMinWeightCandy() {
+        Sweets min = candyBox.get(0);
+        for (Sweets candy :
+                candyBox) {
+            if (candy.getWeight()<min.getWeight()) min = candy;
+        }
+        return min;
+    }
+
+    @Override
+    public Sweets getMinPriceCandy() {
+        Sweets min = candyBox.get(0);
+        for (Sweets candy :
+                candyBox) {
+            if (candy.getPrice()<min.getPrice()) min = candy;
+        }
+        return min;
+    }
+
+    @Override
+    public void makeCandyBoxLighterW(double goalWeight) {
+        while (this.getCandyBoxWeight()>goalWeight)
+        candyBox.remove(this.getMinWeightCandy());
+    }
+
+    @Override
+    public void makeCandyBoxLighterP(double goalWeight) {
+        while (this.getCandyBoxWeight()>goalWeight)
+            candyBox.remove(this.getMinPriceCandy());
     }
 }

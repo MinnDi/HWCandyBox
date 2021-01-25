@@ -10,5 +10,6 @@ public interface CandyBoxInterface {
     String getAllSweetsInfo();
     Sweets getMinWeightCandy();
     Sweets getMinPriceCandy();
-    void deleteMinPWCandy();
+    void makeCandyBoxLighterW(double goalWeight);
+    void makeCandyBoxLighterP(double goalWeight);
 }
